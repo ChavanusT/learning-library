@@ -1,7 +1,10 @@
 FROM node:14.14-alpine
-WORKDIR /app
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
 
-COPY package*.json ./
+COPY package*.json /usr/src/app
 RUN npm install --force
 
-CMD ["node", "dist/main"]
+COPY . /usr/src/app
+
+CMD ["npm", "run" , "a"]
