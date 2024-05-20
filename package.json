@@ -9,5 +9,8 @@
   },
   "scripts": {
     "a": "nodemon --inspect index.js"
+  },
+  "devDependencies": {
+    "express": "^4.19.2"
   }
 }
