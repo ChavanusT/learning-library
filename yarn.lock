@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@nexckycort/rijndael-nodejs@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@nexckycort/rijndael-nodejs/-/rijndael-nodejs-2.0.1.tgz#97ef18fb8902010e339c90a134e6b5cba5e409a1"
+  integrity sha512-ibxB3YvDuhS2s0cyrUYR+JAhkKWrNt1ACwnGIx6Hiy6+nVf6svjsC4Fqx9PVzIjDkeBGiwAlWWiyiAAd5k1n4Q==
+
 abbrev@1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
@@ -154,6 +159,11 @@ cookie@0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.6.0.tgz#2798b04b071b0ecbff0dbb62a505a8efa4e19051"
   integrity sha512-U71cyTamuh1CRNCfpGY6to28lxvNwPG4Guz/EVjgf3Jmzv0vlDp1atT9eS5dDjMYHucpHbWns6Lwf3BKz6svdw==
+
+crypto-js@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-4.2.0.tgz#4d931639ecdfd12ff80e8186dba6af2c2e856631"
+  integrity sha512-KALDyEYgpY+Rlob/iriUtjV6d5Eq+Y191A5g4UqLAi8CyGP9N1+FdVbkc1SxKc2r4YAYqG8JzO2KGL+AizD70Q==
 
 dayjs@^1.11.11:
   version "1.11.11"
@@ -604,6 +614,11 @@ readdirp@~3.6.0:
   integrity sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==
   dependencies:
     picomatch "^2.2.1"
+
+rijndael-js@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/rijndael-js/-/rijndael-js-2.0.0.tgz#cee92ef6f661fa16e4879fa2b3ca0f381bdc232e"
+  integrity sha512-TiCKXWUtNOqb6Ck6TMf51wD12hy4ApgFZj7DnWEJ9DHv3MMfu9X5hiervLNLzmj5ieVcLO4Wjp4c3466JUdAzQ==
 
 safe-buffer@5.2.1:
   version "5.2.1"

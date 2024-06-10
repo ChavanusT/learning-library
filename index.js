@@ -12,13 +12,12 @@ const { default: axios } = require("axios");
 const app = express();
 const port = 3000;
 
-function main() {
-    const translator = short();
-    translator.maxLength = 8;
+const L = require("./playground");
+const cds = require("./playground2");
 
-    const id = translator.generate();
-    console.log(id);
-    console.log(translator.maxLength);
+function main() {
+    //L();
+    cds();
 }
 
 function bootstrap() {
@@ -60,4 +59,4 @@ async function testing() {
 
 main();
 bootstrap();
-testing();
+// testing();
