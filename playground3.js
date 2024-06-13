@@ -15,11 +15,9 @@ const timeEntity = new orm.EntitySchema({
             generated: true,
         },
         test_date: { type: "datetime2" },
-        test_time_stamp: {
-            type: "timestamp",
-        },
         time: { type: "time" },
         time_offset: { type: "datetimeoffset" },
+        time_long: { type: "bigint" },
     },
 });
 
@@ -52,11 +50,12 @@ async function queryTime(db) {
     return timeData;
 }
 
-async function insertTime(dateTime2, time, offset) {
+async function insertTime(dateTime2, time, offset, timeLong) {
     const insert = {
         test_date: dateTime2,
         time: time,
         time_offset: offset,
+        time_long: timeLong,
     };
 
     await dataRepo.time.save(insert);

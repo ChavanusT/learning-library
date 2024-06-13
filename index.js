@@ -34,7 +34,6 @@ async function main() {
                 if (e == "yes" || e == "y") {
                     console.log("Insert Time!!!");
                     const dateTime2 = dayjs().format();
-                    // const timestamp = dayjs().unix();
                     const timeTest = dayjs().format("HH:mm:ss.SSS");
                     const date = dayjs().tz(dayjs.tz.guess());
                     const offset = date.format("Z");
@@ -42,8 +41,15 @@ async function main() {
                         `YYYY-MM-DD HH:mm:ss.SSS ${offset}`
                     );
 
-                    console.log(dateTime2, timeTest, dateTimeOffset);
-                    await time.insertTime(dateTime2, timeTest, dateTimeOffset);
+                    const unixTime = dayjs().unix();
+
+                    console.log(dateTime2, timeTest, dateTimeOffset, unixTime);
+                    await time.insertTime(
+                        dateTime2,
+                        timeTest,
+                        dateTimeOffset,
+                        unixTime
+                    );
                 } else {
                     console.log("No insert Time...");
                 }
@@ -70,11 +76,11 @@ async function main() {
 
 function logResult(time) {
     console.log(`query result : ${JSON.stringify(time[0])}`);
-    // const buffer = Buffer.from(time[0].test_time_stamp);
-    // const bigInt = buffer.readBigInt64BE();
-    // console.log(bigInt);
-    // const timestamp = dayjs.unix(Number(bigInt) * 1000);
-    // console.log(timestamp.format());
+
+    // * How to convert bigint (Unix) to date time
+    console.log(
+        `unix time result : ${dayjs(time[0].time_long * 1000).format()}`
+    );
 }
 
 function bootstrap(callback) {
