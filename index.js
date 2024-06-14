@@ -18,11 +18,13 @@ const port = 3000;
 const L = require("./playground");
 const cds = require("./playground2");
 const readline = require("node:readline");
+const sequelize = require("./playground4");
 
 async function main() {
     //L();
     //cds();
-    await time.start();
+    //await time.start(); // for test insert time in every type in mssql via typeorm.
+    const db = await sequelize.startSequelize(); // for test insert transactions via sequelize.
     const rl = readline.createInterface({
         input: process.stdin,
         output: process.stdout,
@@ -44,12 +46,18 @@ async function main() {
                     const unixTime = dayjs().unix();
 
                     console.log(dateTime2, timeTest, dateTimeOffset, unixTime);
-                    await time.insertTime(
-                        dateTime2,
-                        timeTest,
-                        dateTimeOffset,
-                        unixTime
-                    );
+                    await sequelize.testTransaction(db, {
+                        test_date: dateTime2,
+                        time: timeTest,
+                        time_offset: dateTimeOffset,
+                        time_long: unixTime,
+                    });
+                    // await time.insertTime(
+                    //     dateTime2,
+                    //     timeTest,
+                    //     dateTimeOffset,
+                    //     unixTime
+                    // );
                 } else {
                     console.log("No insert Time...");
                 }
@@ -58,8 +66,8 @@ async function main() {
                     console.log(
                         "I suggest it Query Time!!! No matter what are you do."
                     );
-                    const result = await time.queryTime();
-                    logResult(result);
+                    //const result = await time.queryTime();
+                    //logResult(result);
                     rl.close();
                     resolve("CloseBt122$43");
                 });
@@ -90,7 +98,7 @@ function bootstrap(callback) {
     });
 }
 
-function pinginy() {
+function pingTest() {
     const host = "192.168.10.171";
     ping.sys.probe(host, (active) => {
         var info = active
