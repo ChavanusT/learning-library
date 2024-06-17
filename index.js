@@ -46,12 +46,12 @@ async function main() {
                     const unixTime = dayjs().unix();
 
                     console.log(dateTime2, timeTest, dateTimeOffset, unixTime);
-                    await sequelize.testTransaction(db, {
-                        test_date: dateTime2,
-                        time: timeTest,
-                        time_offset: dateTimeOffset,
-                        time_long: unixTime,
-                    });
+                    // await sequelize.testTransaction(db, {
+                    //     test_date: dateTime2,
+                    //     time: timeTest,
+                    //     time_offset: dateTimeOffset,
+                    //     time_long: unixTime,
+                    // });
                     // await time.insertTime(
                     //     dateTime2,
                     //     timeTest,

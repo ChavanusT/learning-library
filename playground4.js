@@ -26,7 +26,7 @@ async function testTransaction(db, time) {
             { transaction: t }
         );
 
-        await db.query(
+        const last = await db.query(
             `insert into TimeTest_Not_Use_In_PROD (
             test_date, time , time_offset , time_long) values (
             '${time.test_date}' , '${time.time}' , '${time.time_offset}' ,
@@ -35,7 +35,9 @@ async function testTransaction(db, time) {
                 transaction: t,
             }
         );
-
+        t.afterCommit(() => {
+            console.log(last);
+        });
         await t.commit();
     } catch (error) {
         console.log(error);
