@@ -20,23 +20,31 @@ async function testTransaction(db, time) {
     const t = await db.transaction();
 
     try {
-        await db.query(
-            `insert into Test_Transaction_Nus (
-            name , age , tel) values ('a' , 1 , '0999999999')`,
-            { transaction: t }
-        );
-
-        const last = await db.query(
-            `insert into TimeTest_Not_Use_In_PROD (
-            test_date, time , time_offset , time_long) values (
-            '${time.test_date}' , '${time.time}' , '${time.time_offset}' ,
-            '${time.time_long}')`,
+        let id = 0;
+        const [create, iiii] = await db.query(
+            `select id from (insert into Test_Transaction_Nus (
+                name , age , tel) 
+                values ('a' , 1 , '0999999999')
+            )`,
             {
                 transaction: t,
+                type: sequelize.QueryTypes.SELECT,
             }
         );
+
+        console.log("Outsider");
+        console.log(create);
+        // const last = await db.query(
+        //     `insert into TimeTest_Not_Use_In_PROD (
+        //     test_date, time , time_offset , time_long) values (
+        //     '${time.test_date}' , '${time.time}' , '${time.time_offset}' ,
+        //     '${time.time_long}')`,
+        //     {
+        //         transaction: t,
+        //     }
+        // );
         t.afterCommit(() => {
-            console.log(last);
+            //console.log(last);
         });
         await t.commit();
     } catch (error) {
