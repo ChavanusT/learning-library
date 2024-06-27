@@ -21,112 +21,117 @@ const readline = require("node:readline");
 const sequelize = require("./playground4");
 
 async function main() {
-    //L();
-    //cds();
-    //await time.start(); // for test insert time in every type in mssql via typeorm.
-    const db = await sequelize.startSequelize(); // for test insert transactions via sequelize.
-    const rl = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout,
-    });
+  //L();
+  //cds();
+  //await time.start(); // for test insert time in every type in mssql via typeorm.
+  const db = await sequelize.startSequelize(); // for test insert transactions via sequelize.
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
 
-    const promise = new Promise((resolve, reject) => {
-        try {
-            rl.question("Want to insert ?", async (e) => {
-                if (e == "yes" || e == "y") {
-                    console.log("Insert Time!!!");
-                    const dateTime2 = dayjs().format();
-                    const timeTest = dayjs().format("HH:mm:ss.SSS");
-                    const date = dayjs().tz(dayjs.tz.guess());
-                    const offset = date.format("Z");
-                    const dateTimeOffset = date.format(
-                        `YYYY-MM-DD HH:mm:ss.SSS ${offset}`
-                    );
+  const promise = new Promise((resolve, reject) => {
+    try {
+      rl.question("Want to insert ?", async (e) => {
+        if (e == "yes" || e == "y") {
+          console.log("Insert Time!!!");
+          const dateTime2 = dayjs().format();
+          const timeTest = dayjs().format("HH:mm:ss.SSS");
+          const date = dayjs().tz(dayjs.tz.guess());
+          const offset = date.format("Z");
+          const dateTimeOffset = date.format(
+            `YYYY-MM-DD HH:mm:ss.SSS ${offset}`
+          );
 
-                    const unixTime = dayjs().unix();
+          testTTT("abc", (x) => {
+            console.log(x);
+          });
 
-                    console.log(dateTime2, timeTest, dateTimeOffset, unixTime);
-                    // await sequelize.testTransaction(db, {
-                    //     test_date: dateTime2,
-                    //     time: timeTest,
-                    //     time_offset: dateTimeOffset,
-                    //     time_long: unixTime,
-                    // });
-                    // await time.insertTime(
-                    //     dateTime2,
-                    //     timeTest,
-                    //     dateTimeOffset,
-                    //     unixTime
-                    // );
-                } else {
-                    console.log("No insert Time...");
-                }
+          const unixTime = dayjs().unix();
 
-                rl.question("Want to Query ?", async (e) => {
-                    console.log(
-                        "I suggest it Query Time!!! No matter what are you do."
-                    );
-                    //const result = await time.queryTime();
-                    //logResult(result);
-                    rl.close();
-                    resolve("CloseBt122$43");
-                });
-            });
-        } catch (error) {
-            reject(error);
+          console.log(dateTime2, timeTest, dateTimeOffset, unixTime);
+          // await sequelize.testTransaction(db, {
+          //     test_date: dateTime2,
+          //     time: timeTest,
+          //     time_offset: dateTimeOffset,
+          //     time_long: unixTime,
+          // });
+          // await time.insertTime(
+          //     dateTime2,
+          //     timeTest,
+          //     dateTimeOffset,
+          //     unixTime
+          // );
+        } else {
+          console.log("No insert Time...");
         }
-    });
 
-    promise.then((x) => {
-        console.log(`Kono process wa owari da. : ${x}`);
-    });
+        rl.question("Want to Query ?", async (e) => {
+          console.log("I suggest it Query Time!!! No matter what are you do.");
+          //const result = await time.queryTime();
+          //logResult(result);
+          rl.close();
+          resolve("CloseBt122$43");
+        });
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+
+  promise.then((x) => {
+    console.log(`Kono process wa owari da. : ${x}`);
+  });
 }
 
 function logResult(time) {
-    console.log(`query result : ${JSON.stringify(time[0])}`);
+  console.log(`query result : ${JSON.stringify(time[0])}`);
 
-    // * How to convert bigint (Unix) to date time
-    console.log(
-        `unix time result : ${dayjs(time[0].time_long * 1000).format()}`
-    );
+  // * How to convert bigint (Unix) to date time
+  console.log(`unix time result : ${dayjs(time[0].time_long * 1000).format()}`);
 }
 
 function bootstrap(callback) {
-    app.listen(port, () => {
-        console.log(`Server Start at Port ${port}`);
-        callback?.();
-    });
+  app.listen(port, () => {
+    console.log(`Server Start at Port ${port}`);
+    callback?.();
+  });
 }
 
 function pingTest() {
-    const host = "192.168.10.171";
-    ping.sys.probe(host, (active) => {
-        var info = active
-            ? "IP " + host + " = Active"
-            : "IP " + host + " = Non-Active";
-        console.log(info);
-    });
+  const host = "192.168.10.171";
+  ping.sys.probe(host, (active) => {
+    var info = active
+      ? "IP " + host + " = Active"
+      : "IP " + host + " = Non-Active";
+    console.log(info);
+  });
 }
 
 async function testing() {
-    const host = "http://192.168.10.141:9000/api/Shift/GetShiftAll";
-    const p = [];
-    for (let i = 0; i < 10; i++) {
-        const promise = new Promise((resolve, reject) => {
-            axios.get(host).then((x) => {
-                resolve(x.data);
-            });
-        });
-        p.push(promise);
-    }
+  const host = "http://192.168.10.141:9000/api/Shift/GetShiftAll";
+  const p = [];
+  for (let i = 0; i < 10; i++) {
+    const promise = new Promise((resolve, reject) => {
+      axios.get(host).then((x) => {
+        resolve(x.data);
+      });
+    });
+    p.push(promise);
+  }
 
-    Promise.all(p)
-        .then((values) => {
-            console.log(values);
-        })
-        .catch((err) => {
-            console.log(err);
-        });
+  Promise.all(p)
+    .then((values) => {
+      console.log(values);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
+async function testTTT(str, callback = null) {
+  let plus = str;
+  callback?.(plus);
 }
 
 bootstrap(main);

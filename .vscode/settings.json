@@ -1,3 +1,4 @@
 {
-    "cSpell.words": ["nexckycort", "rijndael", "typeorm"]
+  "cSpell.words": ["nexckycort", "rijndael", "typeorm"],
+  "prettier.tabWidth": 4
 }
