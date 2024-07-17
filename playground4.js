@@ -1,5 +1,8 @@
+const { IsolationLevel } = require("@sequelize/core");
 const sequelize = require("sequelize");
+const { LOCK } = require("sequelize");
 
+let TTNus;
 async function startSequelize() {
     const db = new sequelize.Sequelize(
         "GO_HRIS",
@@ -9,48 +12,99 @@ async function startSequelize() {
             host: "192.168.20.40",
             dialect: "mssql",
             dialectOptions: { requestTimeout: 300000 },
+            define: {
+                timestamps: false,
+            },
         }
     );
 
     await db.authenticate();
+
+    TTNus = db.define("Test_Transaction_Nus", {
+        id: {
+            type: sequelize.DataTypes.INTEGER,
+            autoIncrement: true,
+            primaryKey: true,
+        },
+        name: sequelize.DataTypes.STRING,
+        age: sequelize.DataTypes.INTEGER,
+        tel: sequelize.DataTypes.STRING,
+    });
+
     return db;
 }
 
 async function testTransaction(db, time) {
-    const t = await db.transaction();
+    //const t = await db.transaction();
 
     try {
         let id = 0;
-        const [create, iiii] = await db.query(
-            `select id from (insert into Test_Transaction_Nus (
-                name , age , tel) 
-                values ('a' , 1 , '0999999999')
-            )`,
+        await db.transaction(
             {
-                transaction: t,
-                type: sequelize.QueryTypes.SELECT,
+                isolationLevel:
+                    sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+            },
+            async (t) => {
+                // your transactions
+                const a = await TTNus.create(
+                    {
+                        name: "alice123",
+                        age: 5,
+                        tel: "099999999",
+                    },
+                    {
+                        fields: ["name", "age", "tel"],
+                        transaction: t,
+                    }
+                );
+
+                const sleep = (ms) =>
+                    new Promise((resolve) => setTimeout(resolve, ms));
+                await sleep(10000).finally(() => {
+                    console.log("Complete");
+                });
+
+                const b = await TTNus.create(
+                    {
+                        name: "aliceBaka",
+                        age: 10,
+                        tel: "099999999",
+                    },
+                    {
+                        fields: ["name", "age", "tel"],
+                        transaction: t,
+                    }
+                );
             }
         );
-
-        console.log("Outsider");
-        console.log(create);
-        // const last = await db.query(
-        //     `insert into TimeTest_Not_Use_In_PROD (
-        //     test_date, time , time_offset , time_long) values (
-        //     '${time.test_date}' , '${time.time}' , '${time.time_offset}' ,
-        //     '${time.time_long}')`,
-        //     {
-        //         transaction: t,
-        //     }
-        // );
-        t.afterCommit(() => {
-            //console.log(last);
-        });
-        await t.commit();
     } catch (error) {
         console.log(error);
-        await t.rollback();
+        //await t.rollback();
     }
 }
 
-module.exports = { startSequelize, testTransaction };
+async function testQuery(db) {
+    const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+    await sleep(1000).finally(() => {
+        console.log("Complete");
+    });
+    try {
+        let id = 0;
+        await db.transaction(
+            {
+                isolationLevel:
+                    sequelize.Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+            },
+            async (t) => {
+                await TTNus.findAll({
+                    transaction: t,
+                    skipLocked: true,
+                });
+            }
+        );
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+module.exports = { startSequelize, testTransaction, testQuery };
