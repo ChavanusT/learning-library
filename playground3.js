@@ -14,7 +14,7 @@ const timeEntity = new orm.EntitySchema({
             type: "int",
             generated: true,
         },
-        test_date: { type: "datetime2" },
+        test_date: { type: "datetime2", default: new Date() },
         time: { type: "time" },
         time_offset: { type: "datetimeoffset" },
         time_long: { type: "bigint" },

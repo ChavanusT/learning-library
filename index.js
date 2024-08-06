@@ -23,7 +23,7 @@ const sequelize = require("./playground4");
 async function main() {
     //L();
     //cds();
-    //await time.start(); // for test insert time in every type in mssql via typeorm.
+    await time.start(); // for test insert time in every type in mssql via typeorm.
     const db = await sequelize.startSequelize(); // for test insert transactions via sequelize.
     const rl = readline.createInterface({
         input: process.stdin,
@@ -43,13 +43,29 @@ async function main() {
                         `YYYY-MM-DD HH:mm:ss.SSS ${offset}`
                     );
 
-                    testTTT("abc", (x) => {
-                        console.log(x);
-                    });
+                    const d = new Date();
+                    // testTTT("abc", (x) => {
+                    //     console.log(x);
+                    // });
 
-                    const unixTime = dayjs().unix();
-
-                    console.log(dateTime2, timeTest, dateTimeOffset, unixTime);
+                    const c = dayjs(`2024-07-24 16:00:01.0000000 +00:00`);
+                    const ca = dayjs(`2024-07-24 23:00:00.0000000 +00:00`);
+                    // console.log(c.local().format());
+                    // console.log(ca.local().format());
+                    // console.log(
+                    //     dayjs(c).local().isSame(dayjs(ca).local(), "day")
+                    // );
+                    // console.log(dayjs(c).isSame(dayjs(ca), "day"));
+                    // // sun = 0 , mon = 1 , tue = 2 , wed = 3 , thu = 4 , fri= 5 , sat = 6
+                    // const alpha = ca.local().diff(c.local(), "minute") / 1440;
+                    // console.log(alpha);
+                    // console.log(Math.ceil(alpha));
+                    // console.log(ca.endOf("day").format());
+                    // console.log(c.endOf("day").format());
+                    console.log(c.format());
+                    test(c);
+                    console.log(c.format());
+                    //console.log(dateTime2, timeTest, dateTimeOffset, unixTime);
                     // await sequelize.testTransaction(db, {
                     //     test_date: dateTime2,
                     //     time: timeTest,
@@ -95,6 +111,11 @@ function logResult(time) {
     );
 }
 
+function test(d) {
+    d = dayjs(d).add(1, "hour");
+    console.log(d.format());
+}
+
 function bootstrap(callback) {
     app.listen(port, () => {
         console.log(`Server Start at Port ${port}`);
@@ -138,8 +159,8 @@ async function testTTT(str, callback = null) {
     callback?.(plus);
 }
 
-//bootstrap(main);
+bootstrap(main);
 
-console.log(dayjs().local().format());
-console.log(dayjs().format());
+// console.log(dayjs().local().format());
+// console.log(dayjs().format());
 // testing();

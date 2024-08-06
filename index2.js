@@ -2,18 +2,13 @@ const moment = require("moment");
 const pg4 = require("./playground4");
 
 function main() {
-    const allowedDateFormats = [
-        "DD/MM/YYYY",
-        "DD/M/YYYY",
-        "YYYY/MM/DD",
-        "YYYY-MM-DD",
-        "DD-MM-YYYY",
-        "DD-M-YYYY",
-        "D/M/YYYY",
-    ];
-    const s = "2/7/2016";
-    let convertDate = moment(s, allowedDateFormats);
-    console.log(convertDate);
+    const csv = "abc.jpg.csv";
+    regex = new RegExp("[^.]+$");
+    extension = csv.match(regex);
+    console.log(extension[0]);
+
+    const abc = ["a", "b", "c"];
+    console.log(`Show me ${abc.join(",")}`);
 }
 
 main();
@@ -29,5 +24,4 @@ main();
 //     await pg4.testTransaction(db);
 // }
 
-main2();
 //main3();

@@ -1,7 +1,7 @@
 // NodeJS implementation of crypto, I'm sure google's
 // crypto would work equally well.
 var crypto = require("crypto-js");
-module.exports = function L() {
+module.exports = function Ldddd() {
     let clearText = "123456";
     let encryptionKey = crypto.enc.Utf8.parse("P@@Sw0rd");
     let salt = crypto.enc.Base64.parse("S@LT&KEY"); // this is the byte array in .net fiddle
